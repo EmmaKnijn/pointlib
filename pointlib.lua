@@ -37,11 +37,8 @@ pointlib.draw.point = function(p)
   term.setCursorPos(originalX,originalY)
 end
 
-pointlib.draw.line = function(P1,P2,t)
-  --if not t then t = 20 end -- the amount of points in between the end and beginning point
-  
-  -- calculate the amount of points actually needed if t isn't given
-
+pointlib.draw.line = function(P1,P2)  
+  -- calculate the amount of points actually needed
   local diffX = P1.x - P2.x
   local diffY = P1.y - P2.y
 
