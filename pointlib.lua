@@ -53,16 +53,20 @@ end
 pointlib.draw = {}
 
 
-pointlib.draw.point = function(p)
+pointlib.draw.point = function(p,color)
   PointCheck(p)
+  color = color or colors.white
   table.insert(displayBuffer,{p.x,p.y})
   if renderer == "term" then
     local originalX, originalY = term.getCursorPos()
     term.setCursorPos(p.x,p.y)
+    local oldColor = term.getTextColor()
+    term.setTextColor(color)
     term.write("*")
+    term.setTextColor(oldColor)
    term.setCursorPos(originalX,originalY)
   elseif renderer == "pixelbox" then
-    canvas:set_pixel(math.floor(p.x),math.floor(p.y),colors.white)
+    pixelbox.CANVAS[math.floor(p.y)][math.floor(p.x)] = color
     canvas:render()
   end
 end
