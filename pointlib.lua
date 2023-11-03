@@ -2,15 +2,12 @@
 -- cache valid point hashes (tostring())
 
 local pixelBoxURL = "https://raw.githubusercontent.com/9551-Dev/apis/main/pixelbox_lite.lua"
-
 if not fs.exists("pixelbox.lua") then
   shell.run("wget " .. pixelBoxURL .. " pixelbox.lua")
 end
 
 local pixelbox = require("pixelbox")
-
 local canvas = pixelbox.new(term.current())
-
 local renderer = "pixelbox"
 local displayBuffer = {}
 
