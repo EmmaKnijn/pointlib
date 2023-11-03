@@ -11,6 +11,9 @@ local canvas = pixelbox.new(term.current())
 local renderer = "pixelbox"
 local displayBuffer = {}
 
+term.clear()
+term.setCursorPos(1,1)
+
 
 local function PointCheck(p)
   if type(p) == "table" and p.type == "point" then
