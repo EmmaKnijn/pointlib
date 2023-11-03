@@ -66,7 +66,7 @@ pointlib.draw.point = function(p,color)
     term.setTextColor(oldColor)
    term.setCursorPos(originalX,originalY)
   elseif renderer == "pixelbox" then
-    pixelbox.CANVAS[math.floor(p.y)][math.floor(p.x)] = color
+    canvas.CANVAS[math.floor(p.y)][math.floor(p.x)] = color
     canvas:render()
   end
 end
