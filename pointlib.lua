@@ -1,5 +1,20 @@
 -- optimisations
 -- cache valid point hashes (tostring())
+
+local pixelBoxURL = "https://raw.githubusercontent.com/9551-Dev/apis/main/pixelbox_lite.lua"
+
+if not fs.exists("pixelbox.lua") then
+  shell.run("wget " .. pixelBoxURL .. " pixelbox.lua")
+end
+
+local pixelbox = require("pixelbox")
+
+local canvas = pixelbox.new(term.current())
+
+local renderer = "pixelbox"
+local displayBuffer = {}
+
+
 local function PointCheck(p)
   if type(p) == "table" and p.type == "point" then
     return true
@@ -25,16 +40,30 @@ pointlib.lerp = function(P1,P2,t)
   return point
 end
 
+-- settings functions
+
+pointlib.setRenderer = function(o)
+  o = o or "pixelbox"
+  if renderer == "pixelbox" or "term" then
+    renderer = o
+  end
+end
 
 -- draw functions
 pointlib.draw = {}
 
+
 pointlib.draw.point = function(p)
   PointCheck(p)
-  local originalX, originalY = term.getCursorPos()
-  term.setCursorPos(p.x,p.y)
-  term.write("*")
-  term.setCursorPos(originalX,originalY)
+  table.insert(displayBuffer,{p.x,p.y})
+  if renderer == "term" then
+    local originalX, originalY = term.getCursorPos()
+    term.setCursorPos(p.x,p.y)
+    term.write("*")
+   term.setCursorPos(originalX,originalY)
+  elseif renderer == "pixelbox" then
+    canvas.set_pixel(p.x,p.y,colors.white)
+  end
 end
 
 pointlib.draw.line = function(P1,P2)  
