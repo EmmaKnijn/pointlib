@@ -29,8 +29,6 @@ pointlib.createPoint = function(x,y)
   return {type="point",x=x,y=y}
 end
 
-
-
 pointlib.lerp = function(P1,P2,t)
   PointCheck(P1)
   PointCheck(P2)
@@ -49,14 +47,25 @@ pointlib.setRenderer = function(o)
   end
 end
 
+pointlib.render = function()
+  for x,o in pairs(displayBuffer) do
+    for y,color in pairs(o) do
+      pointlib.draw.point(pointlib.createPoint(x,y),color,false)
+    end
+  end
+end
+
 -- draw functions
 pointlib.draw = {}
 
 
-pointlib.draw.point = function(p,color)
+pointlib.draw.point = function(p,color,addToBuffer)
   PointCheck(p)
   color = color or colors.white
-  table.insert(displayBuffer,{p.x,p.y})
+  addToBuffer = addToBuffer or true
+  if addToBuffer then
+    displayBuffer[p.x][p.y] = color
+  end
   if renderer == "term" then
     local originalX, originalY = term.getCursorPos()
     term.setCursorPos(p.x,p.y)
