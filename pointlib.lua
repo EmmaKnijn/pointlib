@@ -62,7 +62,8 @@ pointlib.draw.point = function(p)
     term.write("*")
    term.setCursorPos(originalX,originalY)
   elseif renderer == "pixelbox" then
-    canvas.set_pixel(p.x,p.y,colors.white)
+    canvas:set_pixel(math.floor(p.x),math.floor(p.y),colors.white)
+    canvas:render()
   end
 end
 
